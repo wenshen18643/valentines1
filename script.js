@@ -92,6 +92,17 @@ document.addEventListener('DOMContentLoaded', () => {
         errorPopup.classList.add('hidden');
     });
 
+    // Letter Popup Logic
+    // Letter Popup Logic
+    const letterPopup = document.getElementById('letterPopup');
+    const closeLetterBtn = document.getElementById('closeLetter');
+    const letterTextElement = document.querySelector('.letter-text');
+    let letterContent = letterTextElement.innerHTML; // Store the HTML content
+
+    closeLetterBtn.addEventListener('click', () => {
+        letterPopup.classList.add('hidden');
+    });
+
     // Shower Logic
     function startShower() {
         showerContainer.classList.remove('hidden');
@@ -104,34 +115,83 @@ document.addEventListener('DOMContentLoaded', () => {
         const element = document.createElement('div');
         element.classList.add('falling-element');
 
-        // Randomly decide if it's a heart or a GIF
-        const isGif = Math.random() > 0.7 && gifUrls.length > 0;
+        // 5% Chance to be a Letter
+        const isLetter = Math.random() < 0.05;
 
-        if (isGif) {
-            const img = document.createElement('img');
-            img.src = gifUrls[Math.floor(Math.random() * gifUrls.length)];
-            img.style.width = '100px';
-            img.style.height = 'auto';
-            img.style.borderRadius = '10px';
-            element.appendChild(img);
+        if (isLetter) {
+            element.textContent = '💌';
+            element.classList.add('falling-letter');
+
+            // Add click event for the letter
+            element.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent bubbling issues
+                letterPopup.classList.remove('hidden');
+
+                // Typewriter Effect
+                letterTextElement.innerHTML = '';
+                let i = 0;
+                const speed = 30; // Typing speed
+
+                function typeWriter() {
+                    if (i < letterContent.length) {
+                        let char = letterContent.charAt(i);
+
+                        // Handle HTML tags (like <br>) instantly
+                        if (char === '<') {
+                            let tag = '';
+                            while (letterContent.charAt(i) !== '>' && i < letterContent.length) {
+                                tag += letterContent.charAt(i);
+                                i++;
+                            }
+                            tag += '>';
+                            i++;
+                            letterTextElement.innerHTML += tag;
+                            typeWriter(); // Continue immediately after tag
+                        } else {
+                            letterTextElement.innerHTML += char;
+                            i++;
+                            setTimeout(typeWriter, speed);
+                        }
+                    }
+                }
+                typeWriter();
+
+                // Remove the letter element once clicked
+                element.remove();
+            });
+
         } else {
-            element.textContent = ['❤️', '💖', '💝', '💕', '💗', '💘'][Math.floor(Math.random() * 6)];
-            element.style.fontSize = Math.random() * 30 + 20 + 'px';
+            // Normal fallback (Hearts or GIFs)
+            const isGif = Math.random() > 0.7 && gifUrls.length > 0;
+
+            if (isGif) {
+                const img = document.createElement('img');
+                img.src = gifUrls[Math.floor(Math.random() * gifUrls.length)];
+                img.style.width = '100px';
+                img.style.height = 'auto';
+                img.style.borderRadius = '10px';
+                element.appendChild(img);
+            } else {
+                element.textContent = ['❤️', '💖', '💝', '💕', '💗', '💘'][Math.floor(Math.random() * 6)];
+                element.style.fontSize = Math.random() * 30 + 20 + 'px';
+            }
         }
 
         // Random positioning
-        element.style.left = Math.random() * 100 + 'vw';
+        element.style.left = Math.random() * 90 + 5 + 'vw'; // Keep away from extreme edges
         element.style.top = '-100px';
 
         // Random fall duration
-        const duration = Math.random() * 3 + 2 + 's';
+        const duration = Math.random() * 3 + 4 + 's'; // Slower fall (4-7s)
         element.style.animationDuration = duration;
 
         showerContainer.appendChild(element);
 
         // Remove after animation to prevent memory leak
         setTimeout(() => {
-            element.remove();
+            if (element.parentNode) {
+                element.remove();
+            }
         }, parseFloat(duration) * 1000);
     }
 });
