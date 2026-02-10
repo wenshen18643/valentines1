@@ -59,9 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (lines.length > 0) {
                 // Add valid lines to the list (instead of replacing)
                 gifUrls = gifUrls.concat(lines);
+                // Remove duplicates
+                gifUrls = [...new Set(gifUrls)];
+                console.log('Loaded GIFs from file:', gifUrls);
             }
         })
-        .catch(err => console.log('Using default GIFs (likely due to CORS on local file):', err));
+        .catch(err => {
+            console.warn('Could not load gifs_to_use.txt, using defaults.', err);
+            // This is expected on some hosting if the file is missing or blocked
+        });
 
     // No Button Logic
     noBtn.addEventListener('click', () => {
@@ -171,6 +177,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.style.width = '100px';
                 img.style.height = 'auto';
                 img.style.borderRadius = '10px';
+
+                // If image fails to load (404 etc), remove it so it doesn't look ugly
+                img.onerror = function () {
+                    this.remove();
+                };
+
                 element.appendChild(img);
             } else {
                 element.textContent = ['❤️', '💖', '💝', '💕', '💗', '💘'][Math.floor(Math.random() * 6)];
