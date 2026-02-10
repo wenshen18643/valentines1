@@ -1,0 +1,339 @@
+:root {
+    --primary-color: #ff6b6b;
+    --secondary-color: #ffcccc;
+    --text-color: #4a4a4a;
+    --bg-color: #ffe6e6;
+    --yes-color: #4caf50;
+    --no-color: #f44336;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Indie Flower', cursive;
+    background-color: #fff0f5;
+    background-image: linear-gradient(180deg, #fff0f5 0%, #fff5f0 100%);
+    /* Soft pink to very light orange/white */
+    /* Polka dots removed for smoother gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    color: #5a2e2e;
+    /* Darker brown/red text */
+}
+
+.background-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.bg-element {
+    position: absolute;
+    opacity: 0.3;
+    /* Faded look */
+    font-size: 1.5rem;
+    filter: blur(0.5px);
+    /* Soften edges */
+}
+
+.main-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .background-gif removed */
+
+.gif-container {
+    margin: 1.5rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.side-decoration {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100px;
+    z-index: 5;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-side {
+    left: 20px;
+}
+
+.right-side {
+    right: 20px;
+}
+
+.emoji-column {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    /* More spacing */
+    font-size: 2rem;
+    /* Slightly smaller */
+    opacity: 0.9;
+    animation: float 4s ease-in-out infinite;
+}
+
+.emoji-column span:nth-child(even) {
+    animation-delay: 2s;
+    transform: scale(0.9);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+/* Hide on small screens to prevent clutter */
+@media (max-width: 900px) {
+    .side-decoration {
+        display: none;
+    }
+}
+
+
+
+
+
+
+.container {
+    text-align: center;
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
+    /* Pinkish shadow */
+    max-width: 90%;
+    width: 380px;
+    position: relative;
+    z-index: 10;
+}
+
+.main-title {
+    font-family: 'Varela Round', 'Pacifico', cursive;
+    /* Tried to match rounder font */
+    color: #c2185b;
+    /* Dark pink/red */
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+
+.gif-container {
+    margin: 0 auto 2rem auto;
+    height: 220px;
+    width: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 4px dashed #ff8fa3;
+    /* Decorative stitch border */
+    background-color: #fff5f7;
+    /* Very light pink bg for the sticker */
+    overflow: hidden;
+}
+
+.main-gif {
+    /* Kept for fallback, but main is now embed */
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Make tenor embed fill the container but keep it reasonable */
+.tenor-gif-embed {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    pointer-events: none;
+    /* Disable hover interaction */
+    transform: scale(1.1);
+    /* Slight zoom to fill the circle nicely */
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 60px;
+    /* Space for growing button */
+}
+
+.btn {
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Indie Flower', cursive;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.yes-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 35px;
+    box-shadow: 0 4px 0 #388e3c;
+    /* 3D effect */
+}
+
+.yes-btn:active {
+    box-shadow: none;
+    transform: translateY(4px);
+}
+
+.no-btn {
+    background-color: #d32f2f;
+    color: white;
+    padding: 10px 35px;
+    box-shadow: 0 4px 0 #b71c1c;
+    /* 3D effect */
+    position: relative;
+    z-index: 50;
+    /* Ensure it stays on top of the growing Yes button */
+}
+
+.no-btn:active {
+    box-shadow: none;
+    transform: translateY(4px);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Popup Styles */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.popup.hidden {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.popup-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--primary-color);
+}
+
+.popup-content h2 {
+    color: var(--no-color);
+    margin-top: 0;
+}
+
+.popup-btn {
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: 1rem;
+}
+
+/* Shower Styles */
+.shower-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff0f5;
+    /* Solid opaque color matching body bg */
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.shower-container.hidden {
+    display: none;
+}
+
+.celebration-message h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 5rem;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2001;
+    position: relative;
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-20px);
+    }
+}
+
+/* For falling elements */
+.falling-element {
+    position: absolute;
+    user-select: none;
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
