@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     let yesScale = 1;
     let yesClickCount = 0;
-    const CLICK_THRESHOLD = 3;
+    const CLICK_THRESHOLD = 6;
 
     // Try to fetch from file, but don't break if it fails
     fetch('gifs_to_use.txt')
@@ -92,6 +92,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Popup Logic
     function showErrorPopup() {
+        const popupMessages = [
+            { title: "u r ruining the fun! 😠", text: "Don't click that yet!" },
+            { title: "Hehe not yet! 😈", text: "Click NO a few more times..." },
+            { title: "Patience... ⏳", text: "The button needs to be bigger!" },
+            { title: "Nope! ❌", text: "You're too eager!" },
+            { title: "Stop it! 🛑", text: "Play the game properly!" },
+            { title: "Chill... 🧊", text: "Let the NO button have its moment." }
+        ];
+
+        const randomMsg = popupMessages[Math.floor(Math.random() * popupMessages.length)];
+        errorPopup.querySelector('h2').textContent = randomMsg.title;
+        errorPopup.querySelector('p').textContent = randomMsg.text;
+
         errorPopup.classList.remove('hidden');
     }
 
