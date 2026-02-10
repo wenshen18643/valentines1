@@ -57,7 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(text => {
             const lines = text.split('\n').map(url => url.trim()).filter(url => url.length > 0);
             if (lines.length > 0) {
-                gifUrls = lines;
+                // Add valid lines to the list (instead of replacing)
+                gifUrls = gifUrls.concat(lines);
             }
         })
         .catch(err => console.log('Using default GIFs (likely due to CORS on local file):', err));
